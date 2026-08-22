@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+ int*p;
+#define input(x)scanf("%d",&x)
+#define printd(x) printf("%d",x)
+void shifting(int *arr,int n){
+    
+int shift=0;
+printf("How many shifts?: ");
+input(shift); 
+shift=shift%n;
+int *temp;
+temp=calloc(shift,sizeof(int));
+for(int i=0;i<shift;i++){
+*(temp+i)=arr[i];
+// printf("%d",*(arr+i));
+}
+
+    for(int j=shift;j<n;j++)
+
+    {
+        
+        arr[j-shift]=arr[j];
+    }
+           
+
+for(int i=(n-shift);i<n;i++){
+
+arr[i]=temp[i-(n-shift)];
+}
+
+for(int i=0;i<n;i++){
+    printf("%d",*(arr+i));
+}
+free(temp);
+}
+void circular(int *arr,int n){
+    for(int i=0;i<n;i++){
+        printf("ENTER %d value",i+1);
+        scanf("%d",arr+i);
+    }
+    
+    shifting(arr,n);
+} 
+
+int main(){
+    int n=0;
+    printf("ENTER SIZE OF ARRAY: ");
+    input(n);
+    // printd(n);
+    p=calloc(n,sizeof(int));
+    circular(p,n);
+
+
+}
