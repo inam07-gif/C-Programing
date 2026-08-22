@@ -1,0 +1,31 @@
+#include <stdio.h>
+#define printd(x) printf("%d", x)
+int largest(int r,int c,int arr[r][c])
+{
+int lar=(arr[0][0]);
+for(int i=0;i<r;i++){
+    for(int j=0;j<c;j++){
+        if(arr[i][j]>lar){
+            lar=arr[i][j];
+        }
+    }
+}
+// printf("%d",lar);
+return lar;
+
+}
+    int main() {
+    int mat[5][5] = {
+        {3,  7,  2,  9,  1},
+        {8,  4,  6,  0,  5},
+        {12, 15, 3,  7,  9},
+        {1,  2,  3,  4,  5},
+        {6,  9,  11, 14, 0}
+    };
+    int rows=sizeof(mat)/sizeof(mat[0]);
+    int column=sizeof(mat)/sizeof(mat[1]);
+    int result=largest(rows,column,mat);
+    // printf(" %d \n %d ", rows ,column);
+    printd(result);
+
+}
