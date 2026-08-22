@@ -1,0 +1,35 @@
+#include <stdio.h>
+#define printd(x) printf("%d\t", x)
+int transpose(int r,int c,int arr[r][c])
+{
+
+int sum=0;
+for(int i=0;i<r;i++){
+    for(int j=0;j<c;j++){
+        if(arr[i][j]!=arr[j][i]){
+        printf("NO");
+        return 0;}
+        
+        
+        }
+    }
+    printf("its symmetric");
+    return 1;
+}
+
+
+int main() {
+    int mat[5][5] = {
+    {1,  2,  3,  4,  5},
+    {2,  6,  7,  8,  9},
+    {3,  7, 10, 11, 12},
+    {4,  8, 11, 13, 14},
+    {5,  9, 12, 14, 15}
+};
+    int rows=sizeof(mat)/sizeof(mat[0]);
+    int column=sizeof(mat)/sizeof(mat[1]);
+    transpose(rows,column,mat);
+   
+    
+
+}
