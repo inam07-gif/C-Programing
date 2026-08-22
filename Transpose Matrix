@@ -1,0 +1,37 @@
+#include <stdio.h>
+#define printd(x) printf("%d\t", x)
+int transpose(int r,int c,int arr[r][c])
+{
+int trans[c][r];
+for(int i=0;i<r;i++){
+    for(int j=0;j<c;j++){
+        trans[i][j]=arr[j][i];
+        
+        }
+    }
+
+for(int i=0;i<r;i++){
+    printf("\n");
+    for(int j=0;j<c;j++){
+        printd(trans[i][j]);
+        
+        }
+    }
+}
+
+
+int main() {
+    int mat[5][5] = {
+        {3,  7,  2,  9,  1},
+        {8,  4,  6,  0,  5},
+        {12, 15, 3,  7,  9},
+        {1,  2,  3,  4,  5},
+        {6,  9,  11, 14, 0}
+    };
+    int rows=sizeof(mat)/sizeof(mat[0]);
+    int column=sizeof(mat)/sizeof(mat[1]);
+    transpose(rows,column,mat);
+   
+    
+
+}
