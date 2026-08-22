@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+
+{
+    int *a;
+    int *odd, *pos, *neg, *even, n;
+    printf("ENTER number of elements: ");
+    scanf("%d", &n);
+    a = calloc(n, sizeof(int));
+    odd = NULL;
+    even = NULL;
+    pos = NULL;
+    neg = NULL;
+    int odd_size = 0;
+    int even_size = 0;
+    int pos_size = 0;
+    int neg_size = 0;
+    if (a == NULL)
+    {
+        printf("ALLOCATION FAILED!!!");
+        return 1;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        printf("ENTER %d value: ", i);
+        scanf("%d", &a[i]);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] % 2 != 0)
+        {
+            odd_size += 1;
+            odd = realloc(odd, odd_size * sizeof(int));
+            odd[odd_size - 1] = a[i];
+        }
+
+        else
+        {
+            even_size += 1;
+            even = realloc(even, even_size * sizeof(int));
+            even[even_size - 1] = a[i];
+        }
+        if (a[i] >= 0)
+        {
+            pos_size += 1;
+            pos = realloc(pos, pos_size * sizeof(int));
+
+            pos[pos_size - 1] = a[i];
+        }
+        else
+        {
+            neg_size += 1;
+            neg = realloc(neg, neg_size * sizeof(int));
+
+            neg[neg_size - 1] = a[i];
+        }
+    }
+    free(a);
+    free(odd);
+    free(even);
+    free(pos);
+    free(neg);
+    printf("\nODD NUMBERS:\n");
+    for (int i = 0; i < odd_size; i++)
+    {
+        printf("%d ", odd[i]);
+    }
+
+    printf("\n\nEVEN NUMBERS:\n");
+    for (int i = 0; i < even_size; i++)
+    {
+        printf("%d ", even[i]);
+    }
+
+    printf("\n\nPOSITIVE NUMBERS:\n");
+    for (int i = 0; i < pos_size; i++)
+    {
+        printf("%d ", pos[i]);
+    }
+
+    printf("\n\nNEGATIVE NUMBERS:\n");
+    for (int i = 0; i < neg_size; i++)
+    {
+        printf("%d ", neg[i]);
+    }
+}
