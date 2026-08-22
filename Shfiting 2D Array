@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+#define input(x)scanf("%d",&x)
+#define printd(x) printf("%d",x)
+
+int **p;
+
+
+void shifting_rows(int c,int *arr){
+
+    int ns=0;
+    printf("ENTER NUMBER OF SHIFTS: ");
+    input(ns);
+    ns=ns%c;
+
+    int *temp;
+    temp=calloc(ns,sizeof(int ));
+
+    for(int i=0;i<ns;i++){
+        *(temp+i)=*(arr +i);
+    }
+
+    for(int i=ns;i<c;i++){
+        *(arr+i-ns)=*(arr+i);
+    }
+    for(int i=c-ns;i<c;i++){
+        *(arr+i)=*(temp+(i-(c-ns)));
+    }
+
+    free(temp);
+
+}
+
+void add_elements(int r, int c){
+    p=calloc(r,sizeof(int *));
+   
+    for(int i=0; i<r; i++){
+        p[i]=calloc(c,sizeof(int));
+    }
+    for(int i=0; i<r; i++){
+    printf("\n");
+        for(int j=0; j<c; j++){
+            printf("ENTER %d %d value: ",i,j);
+            scanf("%d",&p[i][j]);
+           
+        }
+    }
+    for(int i=0;i<r;i++){
+        shifting_rows(c ,p[i]);
+    }
+
+}
+
+int main(){
+
+
+int rows,columns;
+
+printf("ENTER ROWS: ");
+input(rows);
+printf("ENTER COLUMNS: ");
+input(columns);
+
+add_elements(rows,columns);
+
+for(int i=0; i<rows; i++){
+    printf("\n");
+        for(int j=0; j<columns; j++){
+            printf("%d\t", p[i][j]);
+           
+        }
+    }
+
+}
