@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+int **p;
+void col_sum(int **arr, int max,int r,int *length){
+    for(int i=0;i<max;i++){
+        int sum=0;
+        for(int j=0;j<r;j++){
+            if(i<*(length+j)){
+                sum+=*(*(arr+j)+i);
+            }
+        }
+        printf("THE SUM OF COLUMN %d = %d ",i,sum);
+    }
+}
+void col_go(int **arr, int *length,int r){
+    
+    int max_length=length[0];
+    for(int i=0;i<r;i++){
+        if(max_length<length[i]){
+            max_length=length[i];
+        }
+        
+    }
+    col_sum(p,max_length,r,length);
+}
+ void sum_rows(int *arr, int length, int n)
+{
+    int sum = 0;
+
+    for (int j = 0; j < length; j++)
+    {
+        sum += *(arr + j);
+    }
+
+    printf("The sum of row %d: %d\n", n, sum);
+}
+int main()
+{
+    int rows = 3;
+    int row_length[] = {1, 4, 2};
+    p = calloc(rows, sizeof(int *));
+
+    for (int i = 0; i < rows; i++)
+    {
+        p[i] = calloc(row_length[i], sizeof(int));
+    }
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < row_length[i]; j++)
+        {
+            printf("ENTER (%d,%d): ", i, j);
+            scanf("%d", &p[i][j]);
+        }
+    }
+    for (int i = 0; i < rows; i++)
+    {
+        sum_rows(p[i], row_length[i], i);
+    }
+    col_go(p, row_length, rows);
+
+    for (int i = 0; i < rows; i++)
+    {
+        printf("\n");
+        for (int j = 0; j < row_length[i]; j++)
+        {
+            printf("%d\t", *(*(p + i) + j));
+        }
+    }
+}
