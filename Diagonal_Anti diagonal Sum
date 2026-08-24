@@ -1,0 +1,87 @@
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define input(x) scanf("%d", &x)
+#define printd(x) printf("%d", x)
+int **p;
+int anti_diagonal(int r,int c){
+    int sum=0;
+    
+
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            if(i+j==r-1){
+                sum+=*(*(p+i)+j);
+            }
+        }
+    }
+    return sum;
+
+}
+int diagonal_sum(int r, int c){
+    int sum=0;
+
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            if(i==j){
+                sum+=*(*(p+i)+j);
+            }
+        }
+    }
+    return sum;
+}
+void add_elements(int r, int c)
+{
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            printf("ENTER (%d,%d)th elements: ", i, j);
+            scanf("%d", &p[i][j]);
+        }
+    }
+    int sum_diagonal=diagonal_sum(r,c);
+    int sum_anti=anti_diagonal(r,c);
+    printf("THE DIAGONAL SUM IS = %d\n",sum_diagonal);
+    printf("THE ANTI- DIAGONAL SUM IS = %d",sum_anti);
+}
+void spacing(int r, int c)
+{
+    p = calloc(r, sizeof(int *));
+    if (p == NULL)
+    {
+        printf("ALLOCATION FAILED!!");
+    }
+    else
+    {
+        for (int i = 0; i < r; i++)
+        {
+            p[i] = calloc(c, sizeof(int));
+        }
+
+        add_elements(r, c);
+    }
+}
+int main()
+{
+
+    int r, c;
+
+    printf("ENTER NO OF ROWS: ");
+    input(r);
+    printf("ENTER NO OF COLUMNS: ");
+    input(c);
+    spacing(r, c);
+
+    for (int i = 0; i < r; i++)
+    {
+        printf("\n");
+        for (int j = 0; j < c; j++)
+        {
+            printf("%d\t", p[i][j]);
+        }
+    }
+    return 0;
+}
