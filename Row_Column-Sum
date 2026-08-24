@@ -1,0 +1,122 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#define input(x) scanf("%d", &x)
+#define printd(x) printf("%d", x)
+int **p;
+
+void column_sum(int r, int c, int *temp, int **k)
+{
+
+    for (int i = 0; i < c; i++)
+    {
+        int sum = 0;
+        for (int j = 0; j < r; j++)
+        {
+            sum += *(*(k + j) + i);
+        }
+        temp[i] = sum;
+    }
+}
+
+void row_sum(int c, int *p, int t, int *temp)
+{
+
+    int sum = 0;
+
+    for (int i = 0; i < c; i++)
+    {
+        sum += *(p + i);
+        // printf("The SUM %d row is= %d ",t+1,sum);
+        temp[t] = sum;
+    }
+}
+
+void add_elements(int r, int c)
+{
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            printf("ENTER (%d,%d)th elements: ", i, j);
+            scanf("%d", &p[i][j]);
+        }
+    }
+    int *temp;
+    temp = calloc(r, sizeof(int));
+    if (temp == NULL)
+    {
+        printf("ALLOCATION FAILED!!!");
+    }
+    else
+    {
+
+        for (int i = 0; i < r; i++)
+        {
+            row_sum(c, p[i], i, temp);
+        }
+
+        printf("THE SUM OF EACH ROWS: ");
+        for (int i = 0; i < r; i++)
+        {
+            printf("%d\t", *(temp + i));
+        }
+
+        free(temp);
+
+        int *tempo = calloc(c, sizeof(int));
+
+        if (tempo == NULL)
+        {
+            printf("ALLOCATION FAILED!!!");
+        }
+        else
+        {
+            column_sum(r, c, tempo, p);
+            printf("THE COLUMN SUM IS: ");
+            for (int i = 0; i < c; i++)
+            {
+                printf("%d\t", *(tempo + i));
+            }
+            free(tempo);
+        }
+    }
+}
+void space(int r, int c)
+{
+    p = calloc(r, sizeof(int *));
+    if (p == NULL)
+    {
+        printf("ALLOCATION FAILED!!");
+    }
+    else
+    {
+        for (int i = 0; i < r; i++)
+        {
+            p[i] = calloc(c, sizeof(int));
+        }
+
+        add_elements(r, c);
+    }
+}
+int main()
+{
+
+    int r, c;
+
+    printf("ENTER NO OF ROWS: ");
+    input(r);
+    printf("ENTER NO OF COLUMNS: ");
+    input(c);
+    space(r, c);
+
+    for (int i = 0; i < r; i++)
+    {
+        printf("\n");
+        for (int j = 0; j < c; j++)
+        {
+            printf("%d\t", p[i][j]);
+        }
+    }
+    return 0;
+}
