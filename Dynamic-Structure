@@ -122,7 +122,7 @@ void edit_entry(struct class *p, int n)
     fgets(name, 20, stdin);
     name[strcspn(name, "\n")] = '\0';
 
-    // First find the student
+    
     int index = -1;
 
     for (int i = 0; i < n; i++)
