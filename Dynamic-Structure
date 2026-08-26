@@ -1,0 +1,325 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+struct DOB
+{
+    int year;
+    int month;
+    int day;
+};
+
+struct class
+{
+
+    char name[20];
+    int sem;
+    char res[50];
+    struct DOB dob;
+};
+
+void new_entry(struct class **p, int new, int *n)
+{
+    struct class *temp = realloc(*p, (new + *n) * sizeof(struct class));
+    if (temp == NULL)
+    {
+        printf("allocation failed");
+    }
+    else
+    {
+        *p = temp;
+        for (int i = *n; i < *n + new; i++)
+        {
+            printf("ENTER NAME: ");
+            fgets((*p)[i].name, 20, stdin);
+            (*p)[i].name[strcspn((*p)[i].name, "\n")] = '\0';
+
+            printf("ENTER SEMESTER: ");
+            scanf("%d", &(*p)[i].sem);
+            getchar();
+
+            printf("ENTER RESIDENT OF: ");
+            fgets((*p)[i].res, 20, stdin);
+            (*p)[i].res[strcspn((*p)[i].res, "\n")] = '\0';
+
+            printf("ENTER YEAR OF BIRTH: ");
+            scanf("%d", &(*p)[i].dob.year);
+            getchar();
+            printf("ENTER MONTH OF BIRTH: ");
+            scanf("%d", &(*p)[i].dob.month);
+            getchar();
+
+            printf("ENTER DAY OF BIRTH: ");
+            scanf("%d", &(*p)[i].dob.day);
+            getchar();
+        }
+        *n = *n + new;
+    }
+}
+
+void delete_entry(struct class **p, int *n)
+{
+    printf("\n");
+    printf("---------------------------------------------------------------\n");
+    printf("| %-20s | %-5s | %-20s | %-10s |\n",
+           "NAME", "SEM", "RESIDENT OF", "DOB");
+    printf("---------------------------------------------------------------\n");
+
+    for (int i = 0; i < *n; i++)
+    {
+        printf("| %-20s | %-5d | %-20s | %04d-%02d-%02d |\n",
+               (*p)[i].name,
+               (*p)[i].sem,
+               (*p)[i].res,
+               (*p)[i].dob.year,
+               (*p)[i].dob.month,
+               (*p)[i].dob.day);
+    }
+
+    printf("---------------------------------------------------------------\n");
+    printf("WHich one to delete?[Name]: ");
+    char name[20];
+    fgets(name, 20, stdin);
+    name[strcspn(name, "\n")] = '\0';
+    int found = 0;
+    for (int i = 0; i < *n; i++)
+    {
+        if ((strcmp((*p)[i].name, name) == 0))
+        {
+            found = 1;
+            for (int j = i; j < *n - 1; j++)
+            {
+                (*p)[j] = (*p)[j + 1];
+            }
+            *n = *n - 1;
+            break;
+        }
+    }
+    if (found == 1)
+    {
+        struct class *temp = realloc(*p, *n * sizeof(struct class));
+        if (temp == NULL)
+        {
+            printf("allocation failed");
+        }
+        else
+        {
+            *p = temp;
+            printf("SUCESSFULL DELETE!!!");
+        }
+    }
+    else
+    {
+        printf("NOT PRESENT IN THIS LIST!!!");
+    }
+}
+
+void edit_entry(struct class *p, int n)
+{
+    printf("IN which person you want to change? ");
+
+    char name[20];
+    fgets(name, 20, stdin);
+    name[strcspn(name, "\n")] = '\0';
+
+    // First find the student
+    int index = -1;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (strcmp(p[i].name, name) == 0)
+        {
+            index = i;
+            break;
+        }
+    }
+
+    
+    if (index == -1)
+    {
+        printf("STUDENT NOT FOUND!!!\n");
+        return;
+    }
+
+    
+    printf("\nWHAT TO CHANGE?\n");
+    printf("1 - Name\n");
+    printf("2 - Semester\n");
+    printf("3 - Resident\n");
+    printf("4 - DOB\n");
+
+    int what;
+    scanf("%d", &what);
+    getchar();
+
+    if (what == 1)
+    {
+        char new[20];
+
+        printf("ENTER NEW NAME: ");
+        fgets(new, 20, stdin);
+        new[strcspn(new, "\n")] = '\0';
+
+        strcpy(p[index].name, new);
+    }
+
+    else if (what == 2)
+    {
+        int new;
+
+        printf("ENTER NEW SEMESTER: ");
+        scanf("%d", &new);
+        getchar();
+
+        p[index].sem = new;
+    }
+
+    else if (what == 3)
+    {
+        char new[50];
+
+        printf("ENTER NEW RESIDENT: ");
+        fgets(new, 50, stdin);
+        new[strcspn(new, "\n")] = '\0';
+
+        strcpy(p[index].res, new);
+    }
+
+    else if (what == 4)
+    {
+        printf("\nWHAT DO YOU WANT TO CHANGE?\n");
+        printf("1 - Year\n");
+        printf("2 - Month\n");
+        printf("3 - Day\n");
+
+        int dob;
+        scanf("%d", &dob);
+        getchar();
+
+        if (dob == 1)
+        {
+            printf("ENTER NEW YEAR: ");
+            scanf("%d", &p[index].dob.year);
+            getchar();
+        }
+
+        else if (dob == 2)
+        {
+            printf("ENTER NEW MONTH: ");
+            scanf("%d", &p[index].dob.month);
+            getchar();
+        }
+
+        else if (dob == 3)
+        {
+            printf("ENTER NEW DAY: ");
+            scanf("%d", &p[index].dob.day);
+            getchar();
+        }
+
+        else
+        {
+            printf("INVALID KEY!!!\n");
+            return;
+        }
+    }
+
+    else
+    {
+        printf("INVALID KEY!!!\n");
+        return;
+    }
+
+    printf("SUCCESSFULLY EDITED!!!\n");
+}
+
+void print(struct class *p,int n){
+    printf("\n");
+    printf("---------------------------------------------------------------\n");
+    printf("| %-20s | %-5s | %-20s | %-10s |\n",
+           "NAME", "SEM", "RESIDENT OF", "DOB");
+    printf("---------------------------------------------------------------\n");
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("| %-20s | %-5d | %-20s | %04d-%02d-%02d |\n",
+               p[i].name,
+               p[i].sem,
+               p[i].res,
+               p[i].dob.year,
+               p[i].dob.month,
+               p[i].dob.day);
+    }
+
+    printf("---------------------------------------------------------------\n");
+
+
+}
+int main()
+{
+    int flag = 1;
+
+    int n;
+    printf("ENTER HOW MANY STUDENT TO CRAETE: ");
+    scanf("%d", &n);
+    getchar();
+
+    struct class *p;
+    p = calloc(n, sizeof(struct class));
+    // printf("%d",sizeof(struct class));
+    for (int i = 0; i < n; i++)
+    {
+        printf("ENTER NAME: ");
+        fgets(p[i].name, 20, stdin);
+        p[i].name[strcspn(p[i].name, "\n")] = '\0';
+
+        printf("ENTER SEMESTER: ");
+        scanf("%d", &p[i].sem);
+        getchar();
+
+        printf("ENTER RESIDENT OF: ");
+        fgets(p[i].res, 20, stdin);
+        p[i].res[strcspn(p[i].res, "\n")] = '\0';
+
+        printf("ENTER YEAR OF BIRTH: ");
+        scanf("%d", &p[i].dob.year);
+        getchar();
+        printf("ENTER MONTH OF BIRTH: ");
+        scanf("%d", &p[i].dob.month);
+        getchar();
+
+        printf("ENTER DAY OF BIRTH: ");
+        scanf("%d", &p[i].dob.day);
+        getchar();
+    }
+    while (flag)
+    {
+        printf("WHAT DO YOU WANT NEXT !!!\n1- ADD STUDENTS\n2-Delete\n3-Edit\n4-Print\n5-Press othre integer to exit: ");
+        int ops;
+        scanf("%d", &ops);
+        getchar();
+        if (ops == 1)
+        {
+            printf("How many new entry?: ");
+            int new;
+            scanf("%d", &new);
+            getchar();
+            new_entry(&p, new, &n);
+        }
+        else if (ops == 2)
+        {
+            delete_entry(&p, &n);
+        }
+        else if (ops == 3)
+        {
+            edit_entry(p, n);
+        }
+        else if(ops==4){
+            print(p,n);
+        }
+        else
+        {
+           flag=0;
+        }
+    }
+}
