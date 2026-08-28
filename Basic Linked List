@@ -1,0 +1,52 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct class{
+    int a;
+    struct class *address;
+};
+
+
+int main(){
+
+    struct class *sar= NULL;
+    struct class * create;
+    struct class * philal;
+
+    int n;
+
+    printf("ENTER size of linked list: ");
+    scanf("%d",&n);
+
+
+    for(int i=0;i<n;i++){
+        create=malloc(sizeof(struct class));
+        printf("ENTER a number: ");
+        scanf("%d", &create->a);
+
+        if(sar==NULL){
+            sar=create;
+        }
+        else{
+            philal=sar;
+
+            while(philal!=NULL){
+                philal=philal->address;
+
+            }
+            philal->address=create;
+
+            
+        }
+        
+
+
+        }
+        philal=sar;
+
+        while(philal!=NULL){
+            printf("%d",philal->a);
+            philal=philal->address;
+        }
+}
