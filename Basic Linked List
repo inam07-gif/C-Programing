@@ -2,51 +2,51 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct class{
+struct class
+{
     int a;
     struct class *address;
 };
 
+int main()
+{
 
-int main(){
-
-    struct class *sar= NULL;
-    struct class * create;
-    struct class * philal;
+    struct class *sar = NULL;
+    struct class *create;
+    struct class *philal;
 
     int n;
 
     printf("ENTER size of linked list: ");
-    scanf("%d",&n);
+    scanf("%d", &n);
 
-
-    for(int i=0;i<n;i++){
-        create=malloc(sizeof(struct class));
+    for (int i = 0; i < n; i++)
+    {
+        create = malloc(sizeof(struct class));
         printf("ENTER a number: ");
         scanf("%d", &create->a);
+        create->address=NULL;
 
-        if(sar==NULL){
-            sar=create;
+        if (sar == NULL)
+        {
+            sar = create;
         }
-        else{
-            philal=sar;
+        else
+        {
+            philal = sar;
 
-            while(philal!=NULL){
-                philal=philal->address;
-
+            while (philal->address != NULL)
+            {
+                philal = philal->address;
             }
-            philal->address=create;
-
-            
+            philal->address = create;
         }
-        
+    }
+    philal = sar;
 
-
-        }
-        philal=sar;
-
-        while(philal!=NULL){
-            printf("%d",philal->a);
-            philal=philal->address;
-        }
+    while (philal != NULL)
+    {
+        printf("%d", philal->a);
+        philal = philal->address;
+    }
 }
