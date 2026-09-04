@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+struct class{
+    int arr;
+    struct class *next;
+};
+
+int main(){
+
+
+struct class *temp;
+struct class *head=0;
+struct class *newnode;
+
+
+int n;
+printf("ENTER NUMBER LENGTH OF ARRAY: ");
+scanf("%d",&n);
+
+
+for(int i=0;i<n;i++)
+{
+    newnode=malloc(sizeof(struct class));
+    printf("ENTER ELEMENT: ");
+    scanf("%d",&newnode->arr);
+
+    newnode->next=NULL;
+
+
+    if(head==0){
+        head=newnode;
+    }
+
+    else{
+        temp=head;
+        while(temp->next!=NULL){
+            temp=temp->next;
+
+        }
+        temp->next=newnode;
+
+    }
+}
+struct class *prev = NULL;
+struct class *curr = head;
+struct class *nxt;
+
+while (curr != NULL) {
+    nxt = curr->next;     
+    curr->next = prev;    
+    prev = curr;          
+    curr = nxt;           
+}
+
+head = prev;          
+
+temp=head;
+while(temp!=NULL){
+    printf("%d",temp->arr);
+    temp=temp->next;
+}
+}
