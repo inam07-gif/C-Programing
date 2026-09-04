@@ -1,0 +1,107 @@
+// #include<stdio.h>
+// #include<stdlib.h>
+
+// struct node {
+//     int value;
+//     struct node *next;
+
+// };
+
+// int main(){
+//     int n;
+//     printf("ENTER NUMBER VALUES: ");
+//     scanf("%d",&n);
+
+//     struct node *head=0;
+//     struct node *temp ;
+//     struct node *new;
+
+//     for(int i=0;i<n;i++){
+//         new=malloc(sizeof(struct node));
+//         printf("ENTER %d value: ",i+1);
+//         scanf("%d",&new->value);
+//         new->next=NULL;
+
+//         if(head==NULL){
+//             head=new;
+
+//         }
+
+//         else{
+//             temp=head;
+
+//             while(temp->next!=NULL){
+//                 temp=temp->next;
+//             }
+//             temp->next=new;
+//         }
+
+//     }
+//     temp=head;
+//     int sum=0;
+//     while(temp!=NULL){
+//         printf("%d\t",temp->value);
+//         sum+=temp->value;
+//         temp=temp->next;
+//     }
+//     printf("\nTHE TOTOAL SUM IS = %d",sum);
+// }
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int value;
+    struct node *next;
+};
+
+void summ(struct node *head, struct node *temp, int *sum)
+{
+    while (temp != NULL)
+    {
+        printf("%d\t", temp->value);
+        *sum += temp->value;
+        temp = temp->next;
+    }
+}
+
+int main()
+{
+    int n;
+    printf("ENTER NUMBER VALUES: ");
+    scanf("%d", &n);
+
+    struct node *head = 0;
+    struct node *temp;
+    struct node *new;
+
+    for (int i = 0; i < n; i++)
+    {
+        new = malloc(sizeof(struct node));
+        printf("ENTER %d value: ", i + 1);
+        scanf("%d", &new->value);
+        new->next = NULL;
+
+        if (head == NULL)
+        {
+            head = new;
+        }
+
+        else
+        {
+            temp = head;
+
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            temp->next = new;
+        }
+    }
+    temp = head;
+    int sum = 0;
+    summ(head, temp, &sum);
+
+    printf("\nTHE TOTOAL SUM IS = %d", sum);
+}
