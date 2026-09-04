@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+int part(int *p, int l, int h)
+{
+    int pivot = p[l + (h-l)/2];
+    int i = l ,j=h;
+
+    while(i<=j){
+        while(p[i]<pivot){
+            i++;
+        }
+        while(p[j]>pivot){
+            j--;
+        }
+        if (i <= j)
+        {
+            int temp = p[i];
+            p[i] = p[j];
+            p[j] = temp;
+
+            i++;
+            j--;
+        }
+    }
+    
+
+   
+
+    return j;
+}
+void quick(int *p, int low, int high)
+{
+    if (low<high)
+    {
+        int pi = part(p, low, high);
+        quick(p, low, pi);
+        quick(p, pi + 1, high);
+    }
+}
+int main()
+{
+    int arr[] = {5, 6, 3, 2, 4, 6, 9};
+    int n = sizeof(arr) / sizeof(int);
+
+    quick(arr, 0, n - 1);
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+}
