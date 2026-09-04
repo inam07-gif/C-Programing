@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <Stdlib.h>
+
+struct class
+{
+    int value;
+    struct class *add;
+};
+
+int main()
+{
+
+    struct class *head = 0;
+    struct class *newnode;
+    struct class *temp;
+    int n;
+    // struct class *last;
+    printf("ENTER NUMBER OF ELEMENTS: ");
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+    {
+        newnode = malloc(sizeof(struct class));
+        printf("ENTER %d Element: ", i + 1);
+        scanf("%d", &newnode->value);
+        newnode->add = NULL;
+
+        if (head == NULL)
+        {
+            head = newnode;
+        }
+        else
+        {
+            temp = head;
+
+            while (temp->add != NULL)
+            {
+                temp = temp->add;
+            }
+            temp->add = newnode;
+        }
+        
+        
+        }
+        temp=head;
+    
+    while (temp != NULL)
+        {
+            printf("%d", temp->value);
+            temp = temp->add;
+        }
+   
+}
