@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define input(x) scanf("%d", &(x))
+
+void push(int *top, int **stack)
+{
+    int value;
+    printf("Enter a number: ");
+    scanf("%d", &value);
+    int *temp;
+    temp = realloc(*stack, (*top + 2) * sizeof(int));
+
+    if (temp == NULL)
+    {
+        printf("ALLOCATION FAILED!!!");
+    }
+    else
+    {
+        *stack = temp;
+        (*stack)[++(*top)] = value;
+    }
+    // printf("%d", (*stack)[*top]);
+}
+
+void pop(int *top, int **stack)
+{
+
+    if ((*top) == -1)
+    {
+        printf("Stack is emptyyy");
+        
+    }
+    else
+    {
+       (*top)--;
+        int *temp;
+
+        temp = realloc(*stack, (*top + 1) * sizeof(int));
+        *stack = temp;
+        printf("%d", (*stack)[*top]);
+    }
+}
+int main()
+{
+    int n, flag = 1;
+   
+    int top = -1;
+    int *stack = NULL;
+    while (flag == 1)
+    {
+         printf("1 push 2pop 3print ");
+    input(n);
+        switch (n)
+        {
+        case 1:
+            push(&top, &stack);
+            break;
+
+        case 2:
+            pop(&top, &stack);
+            break;
+
+        case 3:
+        if(top>-1){
+            for(int i=0;i<top;i++){
+                printf("%d",stack[i]);
+
+            }
+        }
+        else{
+            printf("ARRAY SIZE IS LESS ZERO");
+        }
+        break;
+        default:
+        printf("NOT ANY OPTIONS");
+        break;
+        }
+    }
+}
