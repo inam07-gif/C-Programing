@@ -1,0 +1,116 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int val;
+    struct node *next;
+};
+
+void push(struct node **head)
+{
+
+    struct node *newnode;
+    newnode = malloc(sizeof(struct node));
+    printf("ENTER A VALUE: ");
+    scanf("%d", &newnode->val);
+    newnode->next = NULL;
+    int value;
+    struct node *temp;
+    if ((*head) == NULL)
+    {
+        *head = newnode;
+    }
+    else
+    {
+        newnode->next = *head;
+        *head = newnode;
+    }
+    value = (*head)->val;
+    printf("PUSHED %d Element", value);
+}
+
+void pop(struct node **head)
+{
+    struct node *temp;
+    int value;
+    if (*head == NULL)
+    {
+        printf("STACK IS EMPTY!!!");
+    }
+    else if ((*head)->next == NULL)
+    {
+        temp = *head;
+        value = (*head)->val;
+        *head = NULL;
+        printf("LAST ELEMENT POPPED %d", value);
+        free(temp);
+    }
+    else
+    {
+        temp = *head;
+        value = (*head)->val;
+        *head = (*head)->next;
+        free(temp);
+        printf("LAST ELEMENT POPPED %d", value);
+    }
+}
+
+void print(struct node *head)
+{
+    struct node *temp;
+    if (head == NULL)
+    {
+        printf("STACK IS EMPTY!!!");
+    }
+    temp = head;
+    while (temp != NULL)
+    {
+        printf("%d\t", temp->val);
+        temp = temp->next;
+    }
+}
+
+int main()
+{
+
+    struct node *head = NULL;
+
+    int flag = 1, n;
+
+    while (flag == 1)
+    {
+        printf("\n----------------\n");
+        printf("1. Push\n");
+        printf("2. Pop\n");
+        printf("3. Print\n");
+        printf("4. Exit\n");
+        printf("----------------\n");
+
+        printf("Enter choice: ");
+        scanf("%d", &n);
+
+        switch (n)
+        {
+        case 1:
+            push(&head);
+            break;
+
+        case 2:
+            pop(&head);
+            break;
+
+        case 3:
+            print(head);
+            break;
+
+        case 4:
+            exit(0);
+            break;
+
+        default:
+            printf("NOT ANY OPtions");
+            break;
+        }
+    }
+}
