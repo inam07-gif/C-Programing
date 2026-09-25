@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int check(char c)
+{
+    if (c == '[' || c == '{' || c == '(')
+    {
+        return 1;
+    }
+    return 0;
+}
+
+void push(int *top, char **stack, char c)
+{
+
+    char *temp;
+    temp = realloc(*stack, (*top + 2) * sizeof(char));
+
+    if (temp == NULL)
+    {
+        printf("Allocation failed");
+    }
+    else
+    {
+        (*stack) = temp;
+        (*stack)[++(*top)] = c;
+    }
+}
+
+char pop(int *top, char **stack)
+{
+
+    if(*(top)==-1){
+        return '\0';
+    }
+   char value = (*stack)[*top];
+   if (*top == 0)
+    {
+        free(*stack);
+        *stack = NULL;
+        *top = -1;
+    }
+    else
+    {
+        (*top)--;
+    }
+
+    return value;
+}
+
+int main()
+{
+
+    char *stack = NULL;
+    int top = -1;
+
+    char s[] = "((";
+    int flag = 1;
+
+    int l = strlen(s);
+
+    if (l % 2 != 0)
+    {
+        printf("EXpression uneven!!!");
+    }
+    else
+    {
+        for (int i = 0; i < l; i++)
+        {
+            int r = check(s[i]);
+
+            if (r == 1)
+            {
+                push(&top, &stack, s[i]);
+            }
+            else
+            {
+                if(top==-1){
+                    flag=0;
+                    break;
+                }
+
+                char result = pop(&top, &stack);
+
+                if ((result == '(' && s[i] != ')') ||
+                    (result == '[' && s[i] != ']') ||
+                    (result == '{' && s[i] != '}'))
+                {
+                    flag = 0;
+                }
+            }
+        }
+    }
+    if(top!=-1){
+        flag=0;
+    }
+
+    if (flag == 1)
+    {
+        printf("THE PARAENTHESIS are in  CORRECT order");
+    }
+    else
+    {
+        printf("THE PARAENTHESIS are NOT in  CORRECT order");
+    }
+}
