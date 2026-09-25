@@ -1,0 +1,125 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int val;
+    struct node *next;
+};
+
+void enq(struct node **f, struct node **r)
+{
+
+    struct node *newnode;
+
+    newnode = malloc(sizeof(struct node));
+
+    if (newnode == NULL)
+    {
+        printf("ALLOCATION FAILED!\n");
+        return;
+    }
+    else
+    {
+        int n;
+
+        printf("ENTer a element ");
+        scanf("%d", &n);
+        newnode->val = n;
+
+        newnode->next = NULL;
+
+        if ((*f) == NULL && (*r) == NULL)
+        {
+
+            (*f) = newnode;
+            (*r) = newnode;
+        }
+        else
+        {
+            (*r)->next = newnode;
+            (*r) = newnode;
+        }
+    }
+    //  struct node *temp;
+    // temp=*f;
+    // while(temp!=NULL){
+
+    //     printf("%d",temp->val);
+    //     temp=temp->next;
+    // }    ----------------------------------> yeh code sirf check karne ke lie whther its
+    //  working correcttly ... (*r)->next = newnode; here i did the midtake as i did
+    //  newnode->next = (*r);
+}
+
+void deq(struct node **f, struct node **r)
+{
+    if ((*f) == NULL && (*r) == NULL)
+    {
+
+        printf("EMPTYYYYYY HAI Karna kya chahta hai??");
+    }
+
+    else if ((*f) == (*r))
+    {
+        free((*f));
+        (*f) = NULL;
+
+        (*r) = NULL;
+    }
+    else
+    {
+        struct node *temp;
+        temp = (*f);
+
+        (*f) = (*f)->next;
+        free(temp);
+        temp = NULL;
+    }
+}
+
+void print(struct node *f)
+{
+
+    while (f != NULL)
+    {
+        printf("%d\t", f->val);
+        f = f->next;
+    }
+}
+int main()
+{
+    struct node *front = NULL;
+    struct node *rear = NULL;
+
+    int flag = 1;
+    while (flag)
+    {
+        int ops;
+        printf("\nENTER OPTIONS\n1-enqueue\n2-dequeue\n3-Print\4-EXIT");
+        scanf("%d", &ops);
+        printf("YOUR OPSTIONS->%d\n", ops);
+
+        switch (ops)
+        {
+        case 1:
+            enq(&front, &rear);
+            break;
+
+        case 2:
+            deq(&front, &rear);
+            break;
+
+        case 3:
+            print(front);
+            break;
+
+        case 4:
+            exit(0);
+
+        default:
+            printf("ENTER A VALID OPtion");
+            break;
+        }
+    }
+}
