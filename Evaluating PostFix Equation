@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+int check(char n)
+{
+    int r = isdigit(n);
+    return r;
+}
+
+void push(int **stack, int *top, int val)
+{
+    int *temp;
+    temp = realloc(*stack, (*top + 2) * sizeof(int));
+    if (temp == NULL)
+    {
+        printf("ALLOCATION FAILED!!");
+    }
+    else
+    {
+        *stack = temp;
+        (*stack)[++(*top)] = val;
+    }
+}
+int pop(int **stack, int *top)
+{
+    int val = (*stack)[*top];
+    int *temp;
+    (*top)--;
+    temp = realloc(*stack, (*top + 1) * sizeof(int));
+    *stack = temp;
+
+    return val;
+}
+
+int main()
+{
+
+    char eq[] = "99*9*";
+    int top = -1;
+    int *stack = NULL;
+    int result=0;
+
+    for (int i = 0; i < strlen(eq); i++)
+    {
+        int r = check(eq[i]);
+        if (r == 1)
+        {
+            int val = eq[i]-'0';
+
+            push(&stack, &top, val);
+        }
+        else
+        {
+            int val1 = pop(&stack, &top);
+            int val2 = pop(&stack, &top);
+
+            char ops = eq[i];
+            switch (ops)
+            {
+            case '+':
+                 result = val1 + val2;
+                push(&stack, &top, result);
+                break;
+            case '-':
+                 result = val2 - val1;
+                push(&stack, &top, result);
+                break;
+            case '*':
+                 result = val1 * val2;
+                push(&stack, &top, result);
+                break;
+            case '/':
+                 result = val2 / val1;
+                push(&stack, &top, result);
+                break;
+            }
+        }
+    }
+    printf("The Result is = %d",result);
+}
