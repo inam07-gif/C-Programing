@@ -1,0 +1,124 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void enq(int **q, int *f, int *r)
+{
+
+    int *temp;
+    temp = realloc(*q, (*r + 2) * sizeof(int));
+    if (temp == NULL)
+    {
+        printf("ALLOCAtion Failed!!!");
+    }
+    else
+    {
+        int n;
+        printf("ENTER a value: ");
+        scanf("%d", &n);
+
+        if (*f == -1 && *r == -1)
+        {
+            ++(*f);
+            ++(*r);
+        }
+        else
+        {
+            ++(*r);
+        }
+
+        *q = temp;
+        (*q)[*r] = n;
+
+        // for(int i=*f;i<=*r;i++){
+        //     printf("%d\t ",(*q)[i]);
+        // }
+    }
+}
+
+void deq(int **q, int *f, int *r)
+{
+    int *temp;
+
+    if (*f == -1 || *r == -1)
+    {
+        printf("QUEUE IS EMPTY1!!");
+        return;
+    }
+    else if (*r == *f)
+    {
+        int n;
+        n = (*q)[*r];
+        *f = -1;
+        *r = -1;
+        free((*q));
+        (*q) = NULL;
+        printf("ELEMENT REMOVED %d", n);
+    }
+    else
+    {
+        int n;
+        n = (*q)[*f];
+
+        for (int i = *f + 1; i <= *r; i++)
+        {
+
+            (*q)[i - 1] = (*q)[i];
+        }
+        --(*r);
+        temp = realloc(*q, (*r + 1) * sizeof(int));
+        if (temp == NULL)
+        {
+            printf("ALLOCAtion Failed!!!");
+        }
+
+        else
+        {
+            (*q) = temp;
+        }
+        printf("ELEMENT REMOVED %d", n);
+    }
+}
+
+void print(int *q, int f, int r)
+{
+    for (int i = f; i <= r; i++)
+    {
+        printf("%d\t ", q[i]);
+    }
+}
+
+int main()
+{
+    int f = -1, r = -1;
+    int *qu = NULL;
+    int flag = 1;
+    while (flag)
+    {
+        int ops;
+        printf("\nENTER OPTIONS\n1-enqueue\n2-dequeue\n3-Print\4-EXIT");
+        scanf("%d", &ops);
+        printf("YOUR OPSTIONS->%d\n", ops);
+
+        switch (ops)
+        {
+        case 1:
+            enq(&qu, &f, &r);
+            break;
+
+        case 2:
+            deq(&qu, &f, &r);
+            break;
+
+        case 3:
+            print(qu, f, r);
+            break;
+
+        case 4:
+            exit(0);
+
+        default:
+            printf("ENTER A VALID OPtion");
+            break;
+        }
+    }
+}
