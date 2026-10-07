@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    struct node *left;
+    int val;
+    struct node *right;
+};
+
+struct node *create(struct node *root, int x)
+{
+
+    if (root == NULL)
+    {
+        struct node *newnode;
+        newnode = (struct node *)malloc(sizeof(struct node));
+
+        newnode->val = x;
+        newnode->left = NULL;
+        newnode->right = NULL;
+
+        return newnode;
+    }
+
+    if (x < root->val)
+    {
+
+        root->left = create(root->left, x);
+    }
+    else
+    {
+
+        root->right = create(root->right, x);
+    }
+
+    return root;
+}
+
+void inorder(struct node *root)
+{
+    if (root == NULL)
+        return;
+
+    inorder(root->left);
+
+    printf("%d\t", root->val);
+
+    inorder(root->right);
+}
+
+void postorder(struct node *root)
+{
+    if (root == NULL)
+        return;
+
+    postorder(root->left);
+    postorder(root->right);
+    printf("%d\t", root->val);
+}
+
+void preorder(struct node *root)
+{
+    if (root == NULL)
+        return;
+
+    printf("%d\t", root->val);
+
+    preorder(root->left);
+
+    preorder(root->right);
+}
+int main()
+{
+
+    struct node *root = NULL;
+
+    int flag = 1;
+    int x;
+
+    while (flag)
+    {
+
+        printf("ENTER VALUE: ");
+        scanf("%d", &x);
+        if (x == -1)
+        {
+            flag = 0;
+        }
+        else
+        {
+            root = create(root, x);
+        }
+    }
+    printf("\nINODER-> ");
+    inorder(root);
+
+     printf("\nPOSTODER-> ");
+     postorder(root);
+
+     printf("\nPREODER-> ");
+     preorder(root);
+}
