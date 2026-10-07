@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+
+    struct node *left;
+    int value;
+    struct node *right;
+};
+//  Basic tree structure z
+
+
+void insert(struct node **R,struct node **c)
+{
+    struct node *newnode;
+    // newnode isilie taaki memery allocate kare like to tackle memory allocation failed
+    
+
+    newnode = malloc(sizeof(struct node));
+
+    if(newnode==NULL){
+        printf("ALLOCATION FAILED!!!");
+
+    }
+
+    else{
+    printf("ENTER VALUE: ");
+    scanf("%d", &newnode->value);
+    newnode->left = NULL;
+    newnode->right = NULL;
+        // VALUES daal dia aur both the address will be NULL (left and right).
+
+    if ((*R) == NULL)
+    {
+        (*R) = newnode;
+        *c=newnode;
+
+        // yeh prehle node creation ke lie ROOT is first node to point out kare ga ...
+    }
+
+    else{
+        char ops;
+        printf("ENTER L to go left and R to go left ");
+        scanf(" %c", &ops);
+
+        if(ops=='l' || ops =='L'){
+            (*c)->left=newnode;
+            (*c)=newnode;
+
+        }
+        else if(ops=='r' || ops =='R'){
+            (*c)->right=newnode;
+            (*c)=newnode;
+
+        }
+        else{
+            printf("Invalid option!!!");
+                }
+    }
+}
+}
+int main()
+{
+
+    struct node *ROOT = NULL;
+    struct node *current=NULL;
+    //  so ham ne ROOT pointer banaya jo point kare ga pehle parent ko.
+    // 
+
+    int flag = 1;
+    int n;
+    //  option using switch inserting element printing exit
+    while (flag)
+    {
+        printf("ENTER 1 for adding 2 for print 3 for exit");
+        scanf("%d", &n);
+        switch (n)
+        {
+
+        case 1:
+            insert(&ROOT, &current);
+            break;
+
+            //    case 2:
+            // print(ROOT);
+            // break;
+
+            // case 3:
+            // exit(0);
+            // break;
+
+            // default:
+            // printf("Invalid option: ");
+        }
+    }
+}
