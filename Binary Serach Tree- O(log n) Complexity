@@ -1,0 +1,115 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    struct node *left;
+    int val;
+    struct node *right;
+};
+
+struct node *create(struct node *root, int x)
+{
+
+    if (root == NULL)
+    {
+        struct node *newnode;
+        newnode = (struct node *)malloc(sizeof(struct node));
+
+        newnode->val = x;
+        newnode->left = NULL;
+        newnode->right = NULL;
+
+        return newnode;
+    }
+
+    if (x < root->val)
+    {
+
+        root->left = create(root->left, x);
+    }
+    else
+    {
+
+        root->right = create(root->right, x);
+    }
+
+    return root;
+}
+
+void inorder(struct node *root)
+{
+    if (root == NULL)
+        return;
+
+    inorder(root->left);
+
+    printf("%d\t", root->val);
+
+    inorder(root->right);
+}
+
+int search(struct node *root, int key)
+{
+    if (root == NULL)
+    {
+        return -1;
+    }
+    else if(root->val == key)
+    {
+
+        return 1;
+    }
+
+    else if (key < root->val)
+    {
+        return search(root->left, key);
+    }
+    else
+    {
+        return search(root->right, key);
+    }
+}
+
+int main()
+
+{
+
+    struct node *root = NULL;
+
+    int flag = 1;
+    int x;
+
+    while (flag)
+    {
+
+        printf("ENTER VALUE: ");
+        scanf("%d", &x);
+        if (x == -1)
+        {
+            flag = 0;
+        }
+        else
+        {
+            root = create(root, x);
+        }
+    }
+    printf("\nINODER-> ");
+    inorder(root);
+
+    int y;
+
+    printf("CHECK ELEMENT TO SEARCH TO SEARCH!!!!");
+    scanf("%d", &y);
+
+   int results= search(root, y);
+
+   if(results== -1){
+    printf("ELEMENT NOT PRESENT IN THE TREE!!!");
+
+   }
+   else if(results==1){
+    printf("ELEMENT %d is present ", y);
+   }
+   
+}
