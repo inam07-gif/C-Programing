@@ -1,0 +1,152 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+
+    struct node *left;
+    int val;
+    struct node *right;
+};
+// tree structure
+
+struct node *create(struct node *root, int x)
+// inserts values according to the BST property.
+{
+
+    if (root == NULL)
+    {
+        struct node *newnode = (struct node *)(malloc(sizeof(struct node)));
+        newnode->val = x;
+        newnode->left = NULL;
+        newnode->right = NULL;
+
+        return newnode;
+    }
+    if (x < root->val)
+    {
+
+        root->left = create(root->left, x);
+    }
+    else
+    {
+
+        root->right = create(root->right, x);
+    }
+
+    return root;
+}
+
+void delete(struct node **root, int key)
+{
+
+    // this function will do condition based search with deletion
+    struct node *temp;
+    temp = (*root);
+
+    if (temp == NULL)
+    {
+        //  agr yeh tree exists nhi hai tou value exists nhi karta...
+        return;
+    }
+    if (key < temp->val)
+    // agr value root sei kam hai tou left side of the tree
+    {
+        delete(&(temp->left), key);
+    }
+    else if (key > temp->val)
+    {
+        // agr badha hai tou right side
+
+        delete(&(temp->right), key);
+    }
+
+    else
+    {
+        //  agr root.val=key then deletion process will start 
+        if (temp->left == NULL && temp->right == NULL)
+        {
+            //  no child remove directly
+            free(temp);
+            (*root) = NULL;
+        }
+
+        else if (temp->left != NULL && temp->right == NULL)
+        {
+            //  agr aik bacha to predecessor ke sath connect
+            struct node *go = temp->left;
+            free(temp);
+            *root = go;
+        }
+        else if (temp->left == NULL && temp->right != NULL)
+        {
+            // same as above just left right checking 
+            struct node *go = temp->right;
+            free(temp);
+            *root = go;
+        }
+
+        else
+        {
+            // b both child present take that value full below and do swapping with root and then remove the child with  no sub child
+            struct node *go = temp->right;
+            while (go->left != NULL)
+            {
+                go = go->left;
+            }
+            temp->val = go->val;
+            delete(&(temp->right), go->val);
+        }
+    }
+}
+void inorder(struct node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    inorder(root->left);
+    printf("%d\t", root->val);
+    inorder(root->right);
+}
+
+int main()
+{
+
+    struct node *root = NULL;
+
+    int flag = 1;
+    int x;
+
+    while (flag)
+    {
+
+        printf("ENTER VALUE: ");
+        scanf("%d", &x);
+        if (x == -1)
+        {
+            flag = 0;
+        }
+        else
+        {
+            root = create(root, x);
+        }
+    }
+
+    int del;
+    delete(&root, del);
+
+    printf("BST Before deletion: ");
+    inorder(root);
+    printf("\n");
+    printf("ENTER A VALUE TO DELETE: ");
+    scanf("%d", &del);
+    delete(&root, del);
+
+    delete(&root, del);
+
+    printf("BST after deletion: ");
+    inorder(root);
+    printf("\n");
+}
